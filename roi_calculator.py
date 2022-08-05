@@ -18,10 +18,10 @@ class Calculator:
     def print_income(self, rental=0, laundry=0, storage=0, misc=0):
         print(f"""
     ============ INCOME ============
-    - Rental Income         ${rental}
-    - Laundry               ${laundry}
-    - Storage               ${storage}
-    - Miscellaneous         ${misc}
+    1- Rental Income         ${rental}
+    2- Laundry               ${laundry}
+    3- Storage               ${storage}
+    4- Miscellaneous         ${misc}
     --------------------------------
     TOTAL MONTHLY INCOME    ${rental + laundry + storage + misc}
     """)
@@ -36,6 +36,7 @@ class Calculator:
         while rental_inc.isdigit() == False:
             rental_inc = input("Please enter a whole number. What is your monthly rental income? $")
         rental_inc = int(rental_inc)
+        self.income_dict['1'] = rental_inc
         os.system('cls')
         self.print_income(rental_inc)
         self.rental_income = rental_inc
@@ -45,6 +46,7 @@ class Calculator:
         while laundry.isdigit() == False:
             laundry = input("Please enter a whole number. What is your monthly laundry income? $")
         laundry = int(laundry)
+        self.income_dict['2'] = laundry
         os.system('cls')
         self.print_income(rental_inc, laundry)
 
@@ -53,6 +55,7 @@ class Calculator:
         while storage.isdigit() == False:
             storage = input("Please enter a whole number. What is your monthly storage income? $")
         storage = int(storage)
+        self.income_dict['3'] = storage
         os.system('cls')
         self.print_income(rental_inc, laundry, storage)
 
@@ -61,19 +64,35 @@ class Calculator:
         while misc.isdigit() == False:
             misc = input("Please enter a whole number. What is your monthly miscellaneous income? $")
         misc = int(misc)
+        self.income_dict['4'] = misc
         os.system('cls')
         self.print_income(rental_inc, laundry, storage, misc)
 
         # TOTAL INCOME
         self.income = rental_inc + laundry + storage + misc
-        okay = input("Does this look okay to submit? Note: You cannot undo into income section once you've submitted it (Y/N): ").lower()
-        while okay not in {'y','n'}:
-            okay = input("That didn't work. Does this look okay to submit? (Y/N): ").lower()
-        if okay == 'y':
-            self.calculate_expenses()
-        else:
-            # TODO: What to change?
-            pass
+
+        while True:
+            os.system('cls')
+            self.print_income(self.income_dict['1'], self.income_dict['2'], self.income_dict['3'], self.income_dict['4'])
+            okay = input("Does this look okay to submit? \nNote: You cannot undo into income section once you've submitted it (Y/N): ").lower()
+
+            while okay not in {'y','n'}:
+                okay = input("That didn't work. Does this look okay to submit? (Y/N): ").lower()
+            if okay == 'y':
+                self.calculate_expenses()
+                break
+
+            else:
+                change = input("Which income would you like to edit? Enter a number from the list above.")
+                while change not in {'1','2','3','4'}:
+                    change = input("That didn't work. Which income would you like to edit? ")
+
+                new_num = input(f"What would you like to change #{change} to? $")
+                while new_num.isdigit() == False:
+                    new_num = input(f"Please enter a whole number. What would you like to change #{change} to? $")
+
+                self.income_dict[change] = int(new_num)
+                
 
 
     def print_expenses(self, tax=0, insurance=0, hoa=0,
