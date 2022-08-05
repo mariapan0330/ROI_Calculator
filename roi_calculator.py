@@ -1,4 +1,3 @@
-from curses.ascii import isdigit
 import os
 
 class Calculator:
@@ -35,7 +34,10 @@ class Calculator:
         # RENTAL
         rental_inc = input("What is your monthly rental income? $")
         while rental_inc.isdigit() == False:
-            rental_inc = input("Please enter a whole number. What is your monthly rental income? $")
+            if rental_inc == 'q':
+                print("Thank you for using the Return on Investment calculator. Goodbye.")
+                return
+            rental_inc = input("\nPlease enter a whole number. What is your monthly rental income? $")
         rental_inc = int(rental_inc)
         self.income_dict['1'] = rental_inc
         os.system('cls')
@@ -45,7 +47,10 @@ class Calculator:
         # LAUNDRY
         laundry = input("What is your monthly laundry income? $")
         while laundry.isdigit() == False:
-            laundry = input("Please enter a whole number. What is your monthly laundry income? $")
+            if laundry == 'q':
+                print("Thank you for using the Return on Investment calculator. Goodbye.")
+                return
+            laundry = input("\nPlease enter a whole number. What is your monthly laundry income? $")
         laundry = int(laundry)
         self.income_dict['2'] = laundry
         os.system('cls')
@@ -54,7 +59,10 @@ class Calculator:
         # STORAGE
         storage = input("What is your monthly storage income? $")
         while storage.isdigit() == False:
-            storage = input("Please enter a whole number. What is your monthly storage income? $")
+            if storage == 'q':
+                print("Thank you for using the Return on Investment calculator. Goodbye.")
+                return
+            storage = input("\nPlease enter a whole number. What is your monthly storage income? $")
         storage = int(storage)
         self.income_dict['3'] = storage
         os.system('cls')
@@ -63,7 +71,10 @@ class Calculator:
         # MISCELLANEOUS
         misc = input("What is your monthly miscellaneous income? $")
         while misc.isdigit() == False:
-            misc = input("Please enter a whole number. What is your monthly miscellaneous income? $")
+            if misc == 'q':
+                print("Thank you for using the Return on Investment calculator. Goodbye.")
+                return
+            misc = input("\nPlease enter a whole number. What is your monthly miscellaneous income? $")
         misc = int(misc)
         self.income_dict['4'] = misc
         os.system('cls')
@@ -75,22 +86,35 @@ class Calculator:
         while True:
             os.system('cls')
             self.print_income(self.income_dict['1'], self.income_dict['2'], self.income_dict['3'], self.income_dict['4'])
-            okay = input("Does this look okay to submit? \nNote: You cannot undo into income section once you've submitted it (Y/N): ").lower()
+            okay = input("Does this look okay to submit? \nNote: You cannot undo once you've submitted. (Y/N): ").lower()
 
-            while okay not in {'y','n'}:
-                okay = input("That didn't work. Does this look okay to submit? (Y/N): ").lower()
+            while okay not in {'y','n','q'}:
+                okay = input("\nThat didn't work. Does this look okay to submit? (Y/N): ").lower()
             if okay == 'y':
                 self.calculate_expenses()
                 break
 
             else:
-                change = input("Which income would you like to edit? Enter a number from the list above.")
-                while change not in {'1','2','3','4'}:
-                    change = input("That didn't work. Which income would you like to edit? ")
+                if okay == 'q':
+                    print("Thank you for using the Return on Investment calculator. Goodbye.")
+                    return
+                change = input("\nWhich income would you like to edit? Enter a number from the list above or type ALL to redo the whole form: ").lower()
+                while change not in {'1','2','3','4','all','q'}:
+                    change = input("\nThat didn't work. Which income would you like to edit? ")
 
-                new_num = input(f"What would you like to change #{change} to? $")
+                if change == 'all':
+                    self.calculate_income()
+                    return
+                elif change == 'q':
+                    print("Thank you for using the Return on Investment calculator. Goodbye.")
+                    return
+
+                new_num = input(f"\nWhat would you like to change #{change} to? $")
                 while new_num.isdigit() == False:
-                    new_num = input(f"Please enter a whole number. What would you like to change #{change} to? $")
+                    if new_num == 'q':
+                        print("Thank you for using the Return on Investment calculator. Goodbye.")
+                        return
+                    new_num = input(f"\nPlease enter a whole number. What would you like to change #{change} to? $")
 
                 self.income_dict[change] = int(new_num)
                 
@@ -107,7 +131,7 @@ class Calculator:
         if utilities_edit:
             utilities = electric + water + sewage + garbage + gas
             print(f""" 
-        > Utilities             ${utilities}
+        > Utilities              ${utilities}
             A- Electric          ${electric}
             B- Water             ${water}
             C- Sewage            ${sewage}
@@ -115,7 +139,7 @@ class Calculator:
             E- Gas               ${gas}""", end='')
 
         else:
-            print(f"\n\t> Utilities             ${utilities}",end='')
+            print(f"\n\t> Utilities              ${utilities}",end='')
 
         print(f"""\n\t3- HOA                   ${hoa}
         4- Lawn/Snow             ${lawn}
@@ -125,7 +149,7 @@ class Calculator:
         8- Property Management   ${management}
         9- Mortgage              ${mortgage}
         ----------------------------------
-        TOTAL MONTHLY EXPENSES  ${tax + insurance + utilities + hoa
+        TOTAL MONTHLY EXPENSES   ${tax + insurance + utilities + hoa
                                     + lawn + vacancy + repairs
                                     + capex + management + mortgage}
         """)
@@ -138,7 +162,10 @@ class Calculator:
         # TAX
         tax = input("What is your monthly tax? $")
         while tax.isdigit() == False:
-            tax = input("Please enter a whole number. What is your monthly tax? $")
+            if tax == 'q':
+                print("Thank you for using the Return on Investment calculator. Goodbye.")
+                return
+            tax = input("\nPlease enter a whole number. What is your monthly tax? $")
         tax = int(tax)
         self.expenses_dict['1'] = tax
         os.system('cls')
@@ -147,7 +174,10 @@ class Calculator:
         # INSURANCE
         insurance = input("What is your monthly insurance? $")
         while insurance.isdigit() == False:
-            insurance = input("Please enter a whole number. What is your monthly insurance? $")
+            if insurance == 'q':
+                print("Thank you for using the Return on Investment calculator. Goodbye.")
+                return
+            insurance = input("\nPlease enter a whole number. What is your monthly insurance? $")
         insurance = int(insurance)
         self.expenses_dict['2'] = insurance
         os.system('cls')
@@ -155,8 +185,11 @@ class Calculator:
 
         # UTILITIES
         util = input("Do you have utilities expenses? (Y/N): ").lower()
-        while util not in {'y','n'}:
-            util = input("That didn't work. Do you have utilities expenses? (Y/N): ")
+        while util not in {'y','n','q'}:
+            util = input("\nThat didn't work. Do you have utilities expenses? (Y/N): ")
+        if util == 'q':
+            print("Thank you for using the Return on Investment calculator. Goodbye.")
+            return
         if util == 'y':
             os.system('cls')
             self.print_expenses(tax, insurance, utilities_edit=True)
@@ -164,7 +197,10 @@ class Calculator:
             # ELECTRIC
             elec = input("What is your monthly electric bill? $")
             while elec.isdigit() == False:
-                elec = input("Please enter a whole number. What is your monthly electric bill? $")
+                if elec == 'q':
+                    print("Thank you for using the Return on Investment calculator. Goodbye.")
+                    return
+                elec = input("\nPlease enter a whole number. What is your monthly electric bill? $")
             elec = int(elec)
             self.utilities_dict['a'] = elec
             os.system('cls')
@@ -173,7 +209,10 @@ class Calculator:
             # WATER
             water = input("What is your monthly water bill? $")
             while water.isdigit() == False:
-                water = input("Please enter a whole number. What is your monthly water bill? $")
+                if water == 'q':
+                    print("Thank you for using the Return on Investment calculator. Goodbye.")
+                    return
+                water = input("\nPlease enter a whole number. What is your monthly water bill? $")
             water = int(water)
             self.utilities_dict['b'] = water
             os.system('cls')
@@ -182,7 +221,10 @@ class Calculator:
             # SEWAGE
             sewage = input("What is your monthly sewage bill? $")
             while sewage.isdigit() == False:
-                sewage = input("Please enter a whole number. What is your monthly sewage bill? $")
+                if sewage == 'q':
+                    print("Thank you for using the Return on Investment calculator. Goodbye.")
+                    return
+                sewage = input("\nPlease enter a whole number. What is your monthly sewage bill? $")
             sewage = int(sewage)
             self.utilities_dict['c'] = sewage
             os.system('cls')
@@ -191,7 +233,10 @@ class Calculator:
             # GARBAGE
             garbage = input("What is your monthly garbage bill? $")
             while garbage.isdigit() == False:
-                garbage = input("Please enter a whole number. What is your monthly garbage bill? $")
+                if garbage == 'q':
+                    print("Thank you for using the Return on Investment calculator. Goodbye.")
+                    return
+                garbage = input("\nPlease enter a whole number. What is your monthly garbage bill? $")
             garbage = int(garbage)
             self.utilities_dict['d'] = garbage
             os.system('cls')
@@ -200,7 +245,10 @@ class Calculator:
             # GAS
             gas = input("What is your monthly gas bill? $")
             while gas.isdigit() == False:
-                gas = input("Please enter a whole number. What is your monthly gas bill? $")
+                if gas == 'q':
+                    print("Thank you for using the Return on Investment calculator. Goodbye.")
+                    return
+                gas = input("\nPlease enter a whole number. What is your monthly gas bill? $")
             gas = int(gas)
             self.utilities_dict['e'] = gas
             os.system('cls')
@@ -212,10 +260,14 @@ class Calculator:
                 os.system('cls')
                 self.print_expenses(tax, insurance, utilities_edit=True, electric=self.utilities_dict['a'], water=self.utilities_dict['b'], sewage=self.utilities_dict['c'], garbage=self.utilities_dict['c'], gas=self.utilities_dict['d'])
                     
-                okay = input("Does this look okay to submit? Note: You cannot undo into utilities section once you've submitted it (Y/N): ").lower()
+                okay = input("Does this look okay to submit? \nNote: You cannot undo once you've submitted. (Y/N): ").lower()
 
-                while okay not in {'y','n'}:
-                    okay = input("That didn't work. Does this look okay to submit? (Y/N): ").lower()
+                while okay not in {'y','n','q'}:
+                    okay = input("\nThat didn't work. Does this look okay to submit? (Y/N): ").lower()
+
+                if okay == 'q':
+                    print("Thank you for using the Return on Investment calculator. Goodbye.")
+                    return
 
                 if okay == 'y':
                     os.system('cls')
@@ -223,14 +275,21 @@ class Calculator:
                     break
 
                 else:
-                    change = input("Which utility bill would you like to edit? Enter a letter from the list above.").lower()
-                    while change not in {'a','b','c','d','e'}:
-                        change = input("That didn't work. Which utility bill would you like to edit? ")
-                    
-                    new_num = input(f"What would you like to change #{change} to? $")
+                    change = input("\nWhich utility bill would you like to edit? Enter a letter from the list above: ").lower()
+                    while change not in {'a','b','c','d','e','q'}:
+                        change = input("\nThat didn't work. Which utility bill would you like to edit? ")
+
+                    if change == 'q':
+                        print("Thank you for using the Return on Investment calculator. Goodbye.")
+                        return
+
+                    new_num = input(f"\nWhat would you like to change {change.upper()} to? $")
 
                     while new_num.isdigit() == False:
-                        new_num = input(f"Please enter a whole number. What would you like to change #{change} to? $")
+                        if new_num == 'q':
+                            print("Thank you for using the Return on Investment calculator. Goodbye.")
+                            return
+                        new_num = input(f"\nPlease enter a whole number. What would you like to change {change.upper()} to? $")
 
                     self.utilities_dict[change] = int(new_num)
         else:
@@ -239,7 +298,10 @@ class Calculator:
         # HOA
         hoa = input("What is your monthly Homeowners Association fee? $")
         while hoa.isdigit() == False:
-            hoa = input("Please enter a whole number. What is your monthly Homeowners Association fee? $")
+            if hoa == 'q':
+                    print("Thank you for using the Return on Investment calculator. Goodbye.")
+                    return
+            hoa = input("\nPlease enter a whole number. What is your monthly Homeowners Association fee? $")
         hoa = int(hoa)
         self.expenses_dict['3'] = hoa
         os.system('cls')
@@ -248,7 +310,10 @@ class Calculator:
         # LAWN/SNOW
         lawn = input("What is your monthly lawn care expense, including snow plowing, leaf blowing, etc? $")
         while lawn.isdigit() == False:
-            lawn = input("Please enter a whole number. What is your monthly lawn care expense, including snow plowing, leaf blowing, etc? $")
+            if lawn == 'q':
+                    print("Thank you for using the Return on Investment calculator. Goodbye.")
+                    return
+            lawn = input("\nPlease enter a whole number. What is your monthly lawn care expense, including snow plowing, leaf blowing, etc? $")
         lawn = int(lawn)
         self.expenses_dict['4'] = lawn
         os.system('cls')
@@ -258,7 +323,10 @@ class Calculator:
         # TODO: vac = input(f"What is your monthly vacancy expense? \nTIP: We recommend setting aside 5% of your monthly rental charge, or ${self.rental_income * 0.05:.2f}. $")
         vac = input(f"What is your monthly vacancy expense? \nTIP: We recommend setting aside 5% of your monthly rental charge, or ${2000 * 0.05:.2f}. $")
         while vac.isdigit() == False:
-            vac = input(f"Please enter a whole number. What is your monthly vacancy expense? $")
+            if vac == 'q':
+                print("Thank you for using the Return on Investment calculator. Goodbye.")
+                return
+            vac = input(f"\nPlease enter a whole number. What is your monthly vacancy expense? $")
         vac = int(vac)
         self.expenses_dict['5'] = vac
         os.system('cls')
@@ -267,7 +335,10 @@ class Calculator:
         # REPAIRS
         repairs = input("What is your monthly repairs expense? $")
         while repairs.isdigit() == False:
-            repairs = input("Please enter a whole number. What is your monthly repairs expense? $")
+            if repairs == 'q':
+                print("Thank you for using the Return on Investment calculator. Goodbye.")
+                return
+            repairs = input("\nPlease enter a whole number. What is your monthly repairs expense? $")
         repairs = int(repairs)
         self.expenses_dict['6'] = repairs
         os.system('cls')
@@ -276,7 +347,10 @@ class Calculator:
         # CAPITAL EXPENDITURES
         capex = input("What is your monthly capital expenditure? $")
         while capex.isdigit() == False:
-            capex = input("Please enter a whole number. What is your monthly capital expenditure? $")
+            if capex == 'q':
+                print("Thank you for using the Return on Investment calculator. Goodbye.")
+                return
+            capex = input("\nPlease enter a whole number. What is your monthly capital expenditure? $")
         capex = int(capex)
         self.expenses_dict['7'] = capex
         os.system('cls')
@@ -285,7 +359,10 @@ class Calculator:
         # PROPERTY MANAGEMENT
         mgmt = input("What is your monthly property management expense? $")
         while mgmt.isdigit() == False:
-            mgmt = input("Please enter a whole number. What is your monthly property management expense? $")
+            if mgmt == 'q':
+                print("Thank you for using the Return on Investment calculator. Goodbye.")
+                return
+            mgmt = input("\nPlease enter a whole number. What is your monthly property management expense? $")
         mgmt = int(mgmt)
         self.expenses_dict['8'] = mgmt
         os.system('cls')
@@ -294,7 +371,10 @@ class Calculator:
         # MORTGAGE
         mort = input("What is your monthly mortgage? $")
         while mort.isdigit() == False:
-            mort = input("Please enter a whole number. What is your monthly mortgage? $")
+            if mort == 'q':
+                print("Thank you for using the Return on Investment calculator. Goodbye.")
+                return
+            mort = input("\nPlease enter a whole number. What is your monthly mortgage? $")
         mort = int(mort)
         self.expenses_dict['9'] = mort
         os.system('cls')
@@ -307,21 +387,34 @@ class Calculator:
             self.print_expenses(self.expenses_dict['1'], self.expenses_dict['2'], self.expenses_dict['3'], self.expenses_dict['4'], self.expenses_dict['5'], self.expenses_dict['6'], self.expenses_dict['7'], self.expenses_dict['8'], self.expenses_dict['9'], utilities=utilities)
 
 
-            okay = input("Does this look okay to submit? \nNote: You cannot undo into expenses section once you've submitted it. (Y/N): ").lower()
+            okay = input("Does this look okay to submit? \nNote: You cannot undo once you've submitted. (Y/N): ").lower()
+            if okay == 'q':
+                print("Thank you for using the Return on Investment calculator. Goodbye.")
+                return
             while okay not in {'y','n'}:
-                okay = input("That didn't work. Does this look okay to submit? (Y/N): ").lower()
+                okay = input("\nThat didn't work. Does this look okay to submit? (Y/N): ").lower()
             if okay == 'y':
                 self.calculate_cash_flow()
                 break
             else:
-                change = input("Which expense would you like to edit? Enter a number from the list above.")
+                change = input("\nWhich expense would you like to edit? Enter a number from the list above or type ALL to redo the whole form: ")
                 while change not in {'1','2','3','4','5','6',
-                '7','8','9'}:
-                    change = input("That didn't work. Which income would you like to edit?")
+                '7','8','9','all','q'}:
+                    change = input("\nThat didn't work. Which expense would you like to edit? ")
                 
-                new_num = input(f"What would you like to change #{change} to? $")
+                if change == 'all':
+                    self.calculate_expenses()
+                    return
+                elif change == 'q':
+                    print("Thank you for using the Return on Investment calculator. Goodbye.")
+                    return
+
+                new_num = input(f"\nWhat would you like to change #{change} to? $")
                 while new_num.isdigit == False:
-                    new_num = input(f"Please enter a whole number. What would you like to change #{change} to? $")
+                    if new_num == 'q':
+                        print("Thank you for using the Return on Investment calculator. Goodbye.")
+                        return
+                    new_num = input(f"\nPlease enter a whole number. What would you like to change #{change} to? $")
 
                 self.expenses_dict[change] = int(new_num)
 
@@ -336,12 +429,15 @@ class Calculator:
         Based on the information you entered, your cash flow is as follows:
         ${self.income:.2f} - ${self.expenses:.2f}
 
-        --------------------------------------------------------------------
+        ---------------------------------------------------------------------
         TOTAL CASH FLOW = ${self.cash_flow:.2f}
-        --------------------------------------------------------------------""")
+        ---------------------------------------------------------------------""")
         cont = input("Press ENTER to continue to calculating Investment. ")
-        if cont != '':
-            cont = input("That didn't work. Press ENTER to continue. ")
+        while cont != '':
+            if cont == 'q':
+                print("Thank you for using the Return on Investment calculator. Goodbye.")
+                return
+            cont = input("\nThat didn't work. Press ENTER to continue. ")
         else:
             self.calculate_investment()
 
@@ -366,32 +462,48 @@ class Calculator:
         # DOWN PAYMENT
         down = input("What was your down payment? $")
         while down.isdigit() == False:
-            down = input("Please enter a whole number. What was your down payment? $")
+            if down == 'q':
+                print("Thank you for using the Return on Investment calculator. Goodbye.")
+                return
+            down = input("\nPlease enter a whole number. What was your down payment? $")
         down = int(down)
+        self.investments_dict['1'] = down
         os.system('cls')
         self.print_investment(down)
 
         # CLOSING COSTS
         closing = input("What are your closing costs? $")
         while closing.isdigit() == False:
-            closing = input("Please enter a whole number. What are your closing costs? $")
+            if closing == 'q':
+                print("Thank you for using the Return on Investment calculator. Goodbye.")
+                return
+            closing = input("\nPlease enter a whole number. What are your closing costs? $")
         closing = int(closing)
+        self.investments_dict['2'] = closing
         os.system('cls')
         self.print_investment(down, closing)
 
         # REHAB BUDGET
         rehab = input("What is your rehab budget? $")
         while rehab.isdigit() == False:
-            rehab = input("Please enter a whole number. What is your rehab budget? $")
+            if rehab == 'q':
+                print("Thank you for using the Return on Investment calculator. Goodbye.")
+                return
+            rehab = input("\nPlease enter a whole number. What is your rehab budget? $")
         rehab = int(rehab)
+        self.investments_dict['3'] = rehab
         os.system('cls')
         self.print_investment(down, closing, rehab)
 
         # MISCELLANEOUS
         misc = input("Any miscellaneous investments? $")
         while misc.isdigit() == False:
-            misc = input("Please enter a whole number. Any miscellaneous investments? $")
+            if misc == 'q':
+                print("Thank you for using the Return on Investment calculator. Goodbye.")
+                return
+            misc = input("\nPlease enter a whole number. Any miscellaneous investments? $")
         misc = int(misc)
+        self.investments_dict['4'] = misc
         os.system('cls')
         self.print_investment(down, closing, rehab, misc)
 
@@ -401,22 +513,36 @@ class Calculator:
             os.system('cls')
             self.print_investment(self.investments_dict['1'], self.investments_dict['2'], self.investments_dict['3'], self.investments_dict['4'])
 
-            okay = input("Does this look okay to submit? \nNote: You cannot undo into investment section once you've submitted it. (Y/N): ").lower()
+            okay = input("Does this look okay to submit? \nNote: You cannot undo once you've submitted. (Y/N): ").lower()
 
-            while okay not in {'y','n'}:
-                okay = input("That didn't work. Does this look okay to submit? (Y/N): ").lower()
+            while okay not in {'y','n','q'}:
+                okay = input("\nThat didn't work. Does this look okay to submit? (Y/N): ").lower()
+
+            if okay == 'q':
+                print("Thank you for using the Return on Investment calculator. Goodbye.")
+                return
 
             if okay == 'y':
                 self.calculate_roi()
                 break
             else:
-                change = input("Which investment would you like to edit? Enter a number from the list above.")
-                while change not in {'1','2','3','4'}:
-                    change = input("That didn't work. Which investment would you like to edit? ")
+                change = input("\nWhich investment would you like to edit? Enter a number from the list above or type ALL to redo the whole form: ")
+                while change not in {'1','2','3','4','all','q'}:
+                    change = input("\nThat didn't work. Which investment would you like to edit? ")
 
-                new_num = input(f"What would you like to change #{change} to? $")
+                if change == 'all':
+                    self.calculate_income()
+                    return
+                elif change == 'q':
+                    print("Thank you for using the Return on Investment calculator. Goodbye.")
+                    return
+
+                new_num = input(f"\nWhat would you like to change #{change} to? $")
                 while new_num.isdigit() == False:
-                    new_num = input(f"Please enter a whole number. What would you like to change #{change} to? $")
+                    if new_num == 'q':
+                        print("Thank you for using the Return on Investment calculator. Goodbye.")
+                        return
+                    new_num = input(f"\nPlease enter a whole number. What would you like to change #{change} to? $")
                 
                 self.investments_dict[change] = int(new_num)
     
@@ -443,16 +569,16 @@ def start():
     os.system('cls')
     print("======== Welcome to the RETURN ON INVESTMENT CALCULATOR ========")
     print("""
-To find your cash on cash return on investment,
-we will first calculate your monthly net income using your monthly income,
-monthly expenses, and monthly cash flow.
-Then, we will divide your yearly net income by your total investment.
-TIP: Enter "Z" to undo a response. Enter "Q" at any time to quit.
+To find your cash on cash return on investment, we will first calculate 
+your monthly net income using your MONTHLY INCOME and MONTHLY EXPENSES.
+Then, we will divide your yearly net income by your TOTAL INVESTMENT.
+
+TIP: You will be able to review your entries before submitting each form.
     """)
     # TODO: MAYBE LATER = add functionality to the z
     cont = input("Press ENTER to continue, or Q to quit.").lower()
     if cont not in {'','q'}:
-        cont = input("That didn't work. \nPress ENTER to continue, or Q to quit.").lower()
+        cont = input("\nThat didn't work. \nPress ENTER to continue, or Q to quit.").lower()
     elif cont == 'q':
         print("Thank you for using the ROI calculator. Goodbye.")
     else:
