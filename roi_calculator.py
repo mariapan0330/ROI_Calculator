@@ -117,8 +117,7 @@ class Calculator:
                     new_num = input(f"\nPlease enter a whole number. What would you like to change #{change} to? $")
 
                 self.income_dict[change] = int(new_num)
-                
-
+            
 
     def print_expenses(self, tax=0, insurance=0, hoa=0,
                         lawn=0, vacancy=0, repairs=0, capex=0, management=0, mortgage=0, utilities=0, utilities_edit=False,
