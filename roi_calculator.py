@@ -291,8 +291,9 @@ class Calculator:
     - Rehab Budget          ${rehab}
     - Miscellaneous         ${misc}
     ------------------------------------
-    TOTAL MONTHLY INCOME    ${total}
+    TOTAL INVESTMENT        ${total}
     """)
+
 
     def calculate_investment(self):
         os.system('cls')
@@ -336,10 +337,27 @@ class Calculator:
         while okay not in {'y','n'}:
             okay = input("That didn't work. Does this look okay to submit? (Y/N): ").lower()
         if okay == 'y':
-            self.calculate_cash_flow()
+            self.calculate_roi()
         else:
             # TODO: What to change?
             pass
+    
+
+    def calculate_roi(self):
+        os.system('cls')
+        self.roi = ((self.cash_flow * 12) / self.investment) * 100
+        print(f"""
+        ============================= ROI =============================
+            FORMULA: yearly cash flow / total investment
+
+        Based on the information you entered, your cash flow is as follows:
+        ${self.cash_flow * 12:.2f} / ${self.investment:.2f}
+
+        ---------------------------------------------------------------
+        RETURN ON INVESTMENT = {self.roi:.2f}%
+        ---------------------------------------------------------------""")
+
+        print("Thanks for using the return on investment calculator. Goodbye.")
 
 
 
