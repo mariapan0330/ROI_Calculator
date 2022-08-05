@@ -100,29 +100,29 @@ class Calculator:
                         electric=0, water=0, sewage=0, garbage=0, gas=0):
         print(f"""
         ============ EXPENSES ============
-        - Tax                   ${tax}
-        - Insurance             ${insurance}""", end='')
+        1- Tax                   ${tax}
+        2- Insurance             ${insurance}""", end='')
         
         if utilities_edit:
             utilities = electric + water + sewage + garbage + gas
             print(f""" 
         > Utilities             ${utilities}
-            - Electric          ${electric}
-            - Water             ${water}
-            - Sewage            ${sewage}
-            - Garbage           ${garbage}
-            - Gas               ${gas}""", end='')
+            A- Electric          ${electric}
+            B- Water             ${water}
+            C- Sewage            ${sewage}
+            D- Garbage           ${garbage}
+            E- Gas               ${gas}""", end='')
 
         else:
             print(f"\n\t> Utilities             ${utilities}",end='')
 
         print(f"""\n\t- HOA                   ${hoa}
-        - Lawn/Snow             ${lawn}
-        - Vacancy               ${vacancy}
-        - Repairs               ${repairs}
-        - Capital Expenditures  ${capex}
-        - Property Management   ${management}
-        - Mortgage              ${mortgage}
+        3- Lawn/Snow             ${lawn}
+        4- Vacancy               ${vacancy}
+        5- Repairs               ${repairs}
+        6- Capital Expenditures  ${capex}
+        7- Property Management   ${management}
+        8- Mortgage              ${mortgage}
         ----------------------------------
         TOTAL MONTHLY EXPENSES  ${tax + insurance + utilities + hoa
                                     + lawn + vacancy + repairs
@@ -139,6 +139,7 @@ class Calculator:
         while tax.isdigit() == False:
             tax = input("Please enter a whole number. What is your monthly tax? $")
         tax = int(tax)
+        self.expenses_dict['1'] = tax
         os.system('cls')
         self.print_expenses(tax)
 
@@ -147,6 +148,7 @@ class Calculator:
         while insurance.isdigit() == False:
             insurance = input("Please enter a whole number. What is your monthly insurance? $")
         insurance = int(insurance)
+        self.expenses_dict['2'] = insurance
         os.system('cls')
         self.print_expenses(tax, insurance)
 
@@ -163,6 +165,7 @@ class Calculator:
             while elec.isdigit() == False:
                 elec = input("Please enter a whole number. What is your monthly electric bill? $")
             elec = int(elec)
+            self.utilities_dict['a'] = elec
             os.system('cls')
             self.print_expenses(tax, insurance, utilities_edit=True, electric=elec)
 
@@ -171,6 +174,7 @@ class Calculator:
             while water.isdigit() == False:
                 water = input("Please enter a whole number. What is your monthly water bill? $")
             water = int(water)
+            self.utilities_dict['b'] = water
             os.system('cls')
             self.print_expenses(tax, insurance, utilities_edit=True, electric=elec, water=water)
             
@@ -179,6 +183,7 @@ class Calculator:
             while sewage.isdigit() == False:
                 sewage = input("Please enter a whole number. What is your monthly sewage bill? $")
             sewage = int(sewage)
+            self.utilities_dict['c'] = sewage
             os.system('cls')
             self.print_expenses(tax, insurance, utilities_edit=True, electric=elec, water=water, sewage=sewage)
 
@@ -187,6 +192,7 @@ class Calculator:
             while garbage.isdigit() == False:
                 garbage = input("Please enter a whole number. What is your monthly garbage bill? $")
             garbage = int(garbage)
+            self.utilities_dict['d'] = garbage
             os.system('cls')
             self.print_expenses(tax, insurance, utilities_edit=True, electric=elec, water=water, sewage=sewage, garbage=garbage)
             
@@ -195,20 +201,37 @@ class Calculator:
             while gas.isdigit() == False:
                 gas = input("Please enter a whole number. What is your monthly gas bill? $")
             gas = int(gas)
+            self.utilities_dict['e'] = gas
             os.system('cls')
             self.print_expenses(tax, insurance, utilities_edit=True, electric=elec, water=water, sewage=sewage, garbage=garbage, gas=gas)
 
             # TOTAL UTILITIES
             utilities = elec + water + sewage + garbage + gas
-            okay = input("Does this look okay to submit? Note: You cannot undo into utilities section once you've submitted it (Y/N): ").lower()
-            while okay not in {'y','n'}:
-                okay = input("That didn't work. Does this look okay to submit? (Y/N): ").lower()
-            if okay == 'y':
+            while True:
                 os.system('cls')
-                self.print_expenses(tax, insurance, utilities_edit=False, utilities=utilities)
-            else:
-                # TODO: What to change?
-                pass
+                self.print_expenses(tax, insurance, utilities_edit=True, electric=self.utilities_dict['a'], water=self.utilities_dict['b'], sewage=self.utilities_dict['c'], garbage=self.utilities_dict['c'], gas=self.utilities_dict['d'])
+                    
+                okay = input("Does this look okay to submit? Note: You cannot undo into utilities section once you've submitted it (Y/N): ").lower()
+
+                while okay not in {'y','n'}:
+                    okay = input("That didn't work. Does this look okay to submit? (Y/N): ").lower()
+
+                if okay == 'y':
+                    os.system('cls')
+                    self.print_expenses(tax, insurance, utilities_edit=False, utilities=utilities)
+                    break
+
+                else:
+                    change = input("Which utility bill would you like to edit? Enter a letter from the list above.").lower()
+                    while change not in {'a','b','c','d','e'}:
+                        change = input("That didn't work. Which utility bill would you like to edit? ")
+                    
+                    new_num = input(f"What would you like to change #{change} to? $")
+                    
+                    while new_num.isdigit() == False:
+                        new_num = input(f"Please enter a whole number. What would you like to change #{change} to? $")
+
+                    self.utilities_dict[change] = int(new_num)
         else:
             utilities = 0
 
