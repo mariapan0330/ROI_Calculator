@@ -1,3 +1,4 @@
+from curses.ascii import isdigit
 import os
 
 class Calculator:
@@ -116,13 +117,13 @@ class Calculator:
         else:
             print(f"\n\t> Utilities             ${utilities}",end='')
 
-        print(f"""\n\t- HOA                   ${hoa}
-        3- Lawn/Snow             ${lawn}
-        4- Vacancy               ${vacancy}
-        5- Repairs               ${repairs}
-        6- Capital Expenditures  ${capex}
-        7- Property Management   ${management}
-        8- Mortgage              ${mortgage}
+        print(f"""\n\t3- HOA                   ${hoa}
+        4- Lawn/Snow             ${lawn}
+        5- Vacancy               ${vacancy}
+        6- Repairs               ${repairs}
+        7- Capital Expenditures  ${capex}
+        8- Property Management   ${management}
+        9- Mortgage              ${mortgage}
         ----------------------------------
         TOTAL MONTHLY EXPENSES  ${tax + insurance + utilities + hoa
                                     + lawn + vacancy + repairs
@@ -227,7 +228,7 @@ class Calculator:
                         change = input("That didn't work. Which utility bill would you like to edit? ")
                     
                     new_num = input(f"What would you like to change #{change} to? $")
-                    
+
                     while new_num.isdigit() == False:
                         new_num = input(f"Please enter a whole number. What would you like to change #{change} to? $")
 
@@ -240,6 +241,7 @@ class Calculator:
         while hoa.isdigit() == False:
             hoa = input("Please enter a whole number. What is your monthly Homeowners Association fee? $")
         hoa = int(hoa)
+        self.expenses_dict['3'] = hoa
         os.system('cls')
         self.print_expenses(tax, insurance, hoa, utilities=utilities)
 
@@ -248,6 +250,7 @@ class Calculator:
         while lawn.isdigit() == False:
             lawn = input("Please enter a whole number. What is your monthly lawn care expense, including snow plowing, leaf blowing, etc? $")
         lawn = int(lawn)
+        self.expenses_dict['4'] = lawn
         os.system('cls')
         self.print_expenses(tax, insurance, hoa, lawn, utilities=utilities)
 
@@ -257,6 +260,7 @@ class Calculator:
         while vac.isdigit() == False:
             vac = input(f"Please enter a whole number. What is your monthly vacancy expense? $")
         vac = int(vac)
+        self.expenses_dict['5'] = vac
         os.system('cls')
         self.print_expenses(tax, insurance, hoa, lawn, vac, utilities=utilities)
 
@@ -265,6 +269,7 @@ class Calculator:
         while repairs.isdigit() == False:
             repairs = input("Please enter a whole number. What is your monthly repairs expense? $")
         repairs = int(repairs)
+        self.expenses_dict['6'] = repairs
         os.system('cls')
         self.print_expenses(tax, insurance, hoa, lawn, vac, repairs, utilities=utilities)
 
@@ -273,6 +278,7 @@ class Calculator:
         while capex.isdigit() == False:
             capex = input("Please enter a whole number. What is your monthly capital expenditure? $")
         capex = int(capex)
+        self.expenses_dict['7'] = capex
         os.system('cls')
         self.print_expenses(tax, insurance, hoa, lawn, vac, repairs, capex, utilities=utilities)
 
@@ -281,6 +287,7 @@ class Calculator:
         while mgmt.isdigit() == False:
             mgmt = input("Please enter a whole number. What is your monthly property management expense? $")
         mgmt = int(mgmt)
+        self.expenses_dict['8'] = mgmt
         os.system('cls')
         self.print_expenses(tax, insurance, hoa, lawn, vac, repairs, capex, mgmt, utilities=utilities)
 
@@ -289,20 +296,35 @@ class Calculator:
         while mort.isdigit() == False:
             mort = input("Please enter a whole number. What is your monthly mortgage? $")
         mort = int(mort)
+        self.expenses_dict['9'] = mort
         os.system('cls')
         self.print_expenses(tax, insurance, hoa, lawn, vac, repairs, capex, mgmt, mort, utilities=utilities)
 
         # TOTAL EXPENSES
         self.expenses = tax + insurance + hoa + lawn + vac + repairs + capex + mgmt + mort + utilities
-        okay = input("Does this look okay to submit? \nNote: You cannot undo into expenses section once you've submitted it. (Y/N): ").lower()
-        while okay not in {'y','n'}:
-            okay = input("That didn't work. Does this look okay to submit? (Y/N): ").lower()
-        if okay == 'y':
-            self.calculate_cash_flow()
-        else:
-            # TODO: What to change?
-            pass
-        
+        while True:
+            os.system('cls')
+            self.print_expenses(self.expenses_dict['1'], self.expenses_dict['2'], self.expenses_dict['3'], self.expenses_dict['4'], self.expenses_dict['5'], self.expenses_dict['6'], self.expenses_dict['7'], self.expenses_dict['8'], self.expenses_dict['9'], utilities=utilities)
+
+
+            okay = input("Does this look okay to submit? \nNote: You cannot undo into expenses section once you've submitted it. (Y/N): ").lower()
+            while okay not in {'y','n'}:
+                okay = input("That didn't work. Does this look okay to submit? (Y/N): ").lower()
+            if okay == 'y':
+                self.calculate_cash_flow()
+                break
+            else:
+                change = input("Which expense would you like to edit? Enter a number from the list above.")
+                while change not in {'1','2','3','4','5','6',
+                '7','8','9'}:
+                    change = input("That didn't work. Which income would you like to edit?")
+                
+                new_num = input(f"What would you like to change #{change} to? $")
+                while new_num.isdigit == False:
+                    new_num = input(f"Please enter a whole number. What would you like to change #{change} to? $")
+
+                self.expenses_dict[change] = int(new_num)
+
 
     def calculate_cash_flow(self):
         os.system('cls')
