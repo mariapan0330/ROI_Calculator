@@ -350,10 +350,10 @@ class Calculator:
         total = down + closing + rehab + misc
         print(f"""
     ============ INVESTMENT ============
-    - Down Payment          ${down}
-    - Closing Costs         ${closing}
-    - Rehab Budget          ${rehab}
-    - Miscellaneous         ${misc}
+    1- Down Payment          ${down}
+    2- Closing Costs         ${closing}
+    3- Rehab Budget          ${rehab}
+    4- Miscellaneous         ${misc}
     ------------------------------------
     TOTAL INVESTMENT        ${total}
     """)
@@ -397,14 +397,28 @@ class Calculator:
 
         # TOTAL
         self.investment = down + closing + rehab + misc
-        okay = input("Does this look okay to submit? \nNote: You cannot undo into investment section once you've submitted it. (Y/N): ").lower()
-        while okay not in {'y','n'}:
-            okay = input("That didn't work. Does this look okay to submit? (Y/N): ").lower()
-        if okay == 'y':
-            self.calculate_roi()
-        else:
-            # TODO: What to change?
-            pass
+        while True:
+            os.system('cls')
+            self.print_investment(self.investments_dict['1'], self.investments_dict['2'], self.investments_dict['3'], self.investments_dict['4'])
+
+            okay = input("Does this look okay to submit? \nNote: You cannot undo into investment section once you've submitted it. (Y/N): ").lower()
+
+            while okay not in {'y','n'}:
+                okay = input("That didn't work. Does this look okay to submit? (Y/N): ").lower()
+
+            if okay == 'y':
+                self.calculate_roi()
+                break
+            else:
+                change = input("Which investment would you like to edit? Enter a number from the list above.")
+                while change not in {'1','2','3','4'}:
+                    change = input("That didn't work. Which investment would you like to edit? ")
+
+                new_num = input(f"What would you like to change #{change} to? $")
+                while new_num.isdigit() == False:
+                    new_num = input(f"Please enter a whole number. What would you like to change #{change} to? $")
+                
+                self.investments_dict[change] = int(new_num)
     
 
     def calculate_roi(self):
