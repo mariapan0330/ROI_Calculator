@@ -1,0 +1,49 @@
+Four Square Method for ROI
+========= BOX 1: INCOME (top left) ===============
+> Rental income             $2000 PER MONTH
+> Laundry                   $0
+> Storage                   $0
+> Misc                      $0
+----------
+= TOTAL MONTHLY INCOME      $2000 PER MONTH
+
+ 
+=============== BOX 2: EXPENSES (bottom left) ===============
+> Tax                       $150 (ALL MONTHLY)
+> Insurance                 $100
+> Utilities                 $0
+    > Electric
+    > Water
+    > Sewer 
+    > Garbage
+    > Gas
+> Home Owners Association   $0
+> Lawn/snow                 $0
+> Vacancy - ~5%             $100
+> Repairs                   $100
+> Capital Expenditures      $100
+> Property Management       $200
+> Mortgage                  $860
+----------
+= TOTAL MONTHLY EXPENSES      $1610
+
+
+=============== BOX 3: CASH FLOW (top right) ===============
+= income - expenses = cash flow
+$2000 - $1610 = $390
+must compare to how much you put in it
+
+=============== BOX 4: CASH ON CASH ROI (bottom right) ===============
+What percent return are you getting on your cash flow?
+1. First add up all the money you put into it:
+> Down Payment              $40000
+> Closing Costs             $3000
+> Rehab budget              $7000
+> Misc Other                $0
+----------
+= TOTAL INVESTMENT            $50,000
+
+2. Cash on cash ROI = Annual Investment / Total Investment
+= (monthly cashflow * 12) /  total investment = (390*12) / 50000 = 4680 / 50000 = 9.36%
+= RESULT = 9.36%
+(is this good?)
